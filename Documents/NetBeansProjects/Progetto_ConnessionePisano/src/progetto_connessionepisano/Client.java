@@ -9,6 +9,7 @@ import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.net.ConnectException;
+import java.net.ServerSocket;
 import java.util.Scanner;
 
 /**
@@ -28,7 +29,7 @@ public class Client {
         String serverAddress = "localhost";
         //porta del server in ascolto
         int port = 2000;
-        String stringaInput;
+        String stringaInput, stringaLetta;
         Scanner x = new Scanner(System.in);
 
         //apertura della connessione al server sulla porta specificata
@@ -47,11 +48,26 @@ public class Client {
             stringaInput = x.next();
             
             //passo al server la stringa inserita dall'utente
-            outputServer.writeBytes(stringaInput);
+            outputServer.writeUTF(stringaInput);
             //svuoto lo stream di eventuali caratteri all'interno con il metodo flush()
             outputServer.flush();
             //Stampo a schermo dell'esecuzione del client cosa dovrebbe arrivare al server *facoltativo*
             System.out.println("Il server leggerà: " + stringaInput);
+            
+            System.out.println("In attesa di un messaggio dal server...");
+            
+            //fino ad ora ho solo mandato una stringa al server
+            //non chiudo la connessione al client perchè lo faccio rimanere in ascolto
+            
+            /*creo un oggetto di tipo DataInputStream che mi servirà a leggere il messaggio
+            che il server ha inserito da tastiera precedentemente*/ 
+            DataInputStream inputServer = new DataInputStream(connection.getInputStream());
+               
+            /*leggo la stringa inviata dal Server con la funzione readUTF()
+            e la inserisco nella variabile stringaLetta*/
+            stringaLetta = inputServer.readUTF();
+            //stampo a schermo del server cosa il client ha trasmesso nel messaggio letto
+            System.out.println("Il Server ha trasmesso: " + stringaLetta);
             
         }
         catch(ConnectException e){
