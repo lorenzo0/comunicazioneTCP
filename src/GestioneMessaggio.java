@@ -13,7 +13,7 @@ import java.net.Socket;
 
 /**
  *
- * @author Studenti
+ * @author Lorenzo Pisanò
  */
 public class GestioneMessaggio {
     
@@ -23,29 +23,38 @@ public class GestioneMessaggio {
         this.messaggio = messaggio;
     }
     
-    public void autore(String s)
+    public void autore(Socket connection)
     {
-        System.out.println("Il messaggio è stato inviato dall'utente: "+s);
+        System.out.println("Il messaggio è stato inviato dall'utente con il seguente socket: "+connection.getLocalSocketAddress());
     }
     
-    public void inLinea(ServerSocket sS)
+    public void inLinea(Socket connection)
     {
-        if(sS.isClosed() != true)
+        if(connection.isClosed() != true)
         {
             System.out.println("L'utente è in linea...");
         }
-    }
-    
-    public void nonInLinea(ServerSocket sS)
-    {
-        if(sS.isClosed() == true)
+        else
         {
             System.out.println("L'utente non è in linea...");
         }
     }
     
-    public void echo(DataInputStream dis, Socket connection) throws IOException
+    public void nonInLinea(Socket connection)
     {
+        if(connection.isClosed() == true)
+        {
+            System.out.println("L'utente non è in linea...");
+        }
+        else
+        {
+            System.out.println("L'utente è in linea...");
+        }
+    }
+    
+    public void echo(Socket connection) throws IOException
+    {
+        DataInputStream dis = new DataInputStream(connection.getInputStream());
         String stringaLetta;
         stringaLetta = dis.readUTF();
         
@@ -54,11 +63,11 @@ public class GestioneMessaggio {
         dos.flush();
     }
     
-    public void end(ServerSocket sS) throws IOException
+    public void end(Socket connection) throws IOException
     {
-        sS.close();
+        connection.close();
         
-        if(sS.isClosed() == true)
+        if(connection.isClosed() == true)
         {
             System.out.println("La connessione è chiusa...");
         }
@@ -66,6 +75,15 @@ public class GestioneMessaggio {
         {
             System.out.println("La connessione non è stata chiusa, server in ascolto...");
         }
+    }
+    
+    public void messaggioSalutoUscita(Socket connection) throws IOException
+    {
+        String stringa = "Sto uscendo dalla chat, alla prossima!";
+        
+        DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
+        dos.writeUTF(stringa);
+        dos.flush();
     }
     
     public void smile(DataInputStream dis, Socket connection) throws IOException
