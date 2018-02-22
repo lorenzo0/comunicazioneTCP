@@ -22,9 +22,14 @@ public class ServerClasse {
     ServerSocket sSocket;
     Socket connection;
     String stringaLetta, stringaInput;
+    String username = "";
+    
     Scanner x = new Scanner(System.in);
     public static final String ColoreBlu = "\u001B[34m";
     public static final String ColoreRed = "\u001B[31m";
+    public static final String ColoreReset = "\u001B[0m";
+    
+    GestioneMessaggio gm1 = new GestioneMessaggio();
 
     public ServerClasse(int port) {
         this.port = port;
@@ -33,7 +38,7 @@ public class ServerClasse {
     public void iniziaAscolto()
     {
         try {
-            System.out.println(ColoreBlu + "Server in attesa di connessioni..." + ColoreBlu);
+            System.out.println("Server in attesa di connessioni...");
             sSocket = new ServerSocket(port);
             connection = sSocket.accept();
         } catch (IOException ex) {
@@ -48,6 +53,10 @@ public class ServerClasse {
             stringaInput = x.nextLine();
             outputServer.writeUTF(stringaInput);
             outputServer.flush();
+            
+            gm1.trovaChiScrive();
+            gm1.richiamaMessaggiAutomatici(stringaInput);
+            
         } catch (IOException ex) {
             Logger.getLogger(ServerClasse.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -58,7 +67,7 @@ public class ServerClasse {
         try {
             DataInputStream inputClient = new DataInputStream(connection.getInputStream());
             stringaLetta = inputClient.readUTF();
-            System.out.println( ColoreRed + "Il Client ha detto: " + stringaLetta + ColoreRed);
+            System.out.println(ColoreRed + stringaLetta + ColoreReset);
         } catch (IOException ex) {
             Logger.getLogger(ServerClasse.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,6 +82,28 @@ public class ServerClasse {
         else
         {
             return false;
+        }
+    }
+    
+    public void inserisciUsername()
+    {
+        System.out.println("Inserisci il tuo username: ");
+        username = x.nextLine();
+    }
+    
+    public String trovaUsername()
+    {
+        System.out.println(username);
+        return username;
+    }
+    
+    public void chiudiConnessione()
+    {
+        try {
+            sSocket.close();
+            System.out.println("Connessione chiusa!");
+        } catch (IOException ex) {
+            Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

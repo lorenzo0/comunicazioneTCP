@@ -28,6 +28,8 @@ public class Server {
         server1.iniziaAscolto();
         ts.start();
         
+        server1.inserisciUsername();
+        
         while(!server1.connessioneAperta()==false)
         {
             server1.mandaMessaggiAlClient();

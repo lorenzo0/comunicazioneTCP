@@ -17,15 +17,30 @@ import java.net.Socket;
  */
 public class GestioneMessaggio {
     
-    String messaggio;
-
-    public GestioneMessaggio(Socket connection) {
-        
+    ClientClasse c1;
+    ServerClasse s1;
+    GestioneMessaggio gm1;
+    
+    String gestiscoIo;
+    
+    public GestioneMessaggio() {
+    }
+    
+    public void trovaChiScrive()
+    {
+        if(c1!=null)
+        {
+            gestiscoIo = "Client";
+        }
+        else
+        {
+            gestiscoIo = "Server";
+        }
     }
     
     public void autore(Socket connection)
     {
-        System.out.println("Il messaggio è stato inviato dall'utente con il seguente socket: "+connection.getLocalSocketAddress());
+        c1.trovaUsername();
     }
     
     public void inLinea(Socket connection)
@@ -98,4 +113,34 @@ public class GestioneMessaggio {
 //            stringaDaInviare = stringaDaInviare.replaceAll(":)", imageToAdd);
 //        }
 //    }
+    
+    public void richiamaMessaggiAutomatici(String messaggioInInputDaChat)
+    {
+        String stringaAppoggio;
+        
+        if(messaggioInInputDaChat == "/autore")
+        {
+            if(gestiscoIo == "Client")
+            {
+                stringaAppoggio = c1.trovaUsername();
+                System.out.println(stringaAppoggio);
+            }
+            else
+            {
+                s1.trovaUsername();
+            }
+        }
+        
+        if(messaggioInInputDaChat == "/end")
+        {
+            if(gestiscoIo == "Client")
+            {
+                c1.chiudiConnessione();
+            }
+            else
+            {
+                s1.chiudiConnessione();
+            }
+        }
+    }
 }

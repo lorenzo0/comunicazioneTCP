@@ -28,6 +28,8 @@ public class Client{
         client1.connessioneAlServer();
         tc.start();
         
+        client1.inserisciUsername();
+        
         while(!client1.connessioneAperta()==false)
         {
             client1.inviaMessaggioAlServer();

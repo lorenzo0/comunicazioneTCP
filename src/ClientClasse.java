@@ -26,11 +26,14 @@ public class ClientClasse {
     String serverAddress;
     int port;
     String stringaInput, stringaLetta="";
+    String username = "";
+    
     Scanner x = new Scanner(System.in);
     public static final String ColoreBlu = "\u001B[34m";
     public static final String ColoreRed = "\u001B[31m";
+    public static final String ColoreReset = "\u001B[0m";
         
-    GestioneMessaggio gm = new GestioneMessaggio(connection);
+    GestioneMessaggio gm1 = new GestioneMessaggio();
     
     public ClientClasse(int port, String serverAddress)
     {
@@ -54,7 +57,7 @@ public class ClientClasse {
     {
         try {
             connection = new Socket(serverAddress, port);
-            System.out.println( ColoreRed + "Connessione con il server aperta!" + ColoreRed);
+            System.out.println("Connessione con il server aperta!");
         } catch (IOException ex) {
             Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -69,6 +72,10 @@ public class ClientClasse {
             stringaInput = x.nextLine();
             outputServer.writeUTF(stringaInput);
             outputServer.flush();
+            
+            gm1.trovaChiScrive();
+            gm1.richiamaMessaggiAutomatici(stringaInput);
+            
         } catch (IOException ex) {
             Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -79,70 +86,47 @@ public class ClientClasse {
         try {
             DataInputStream inputServer = new DataInputStream(connection.getInputStream());
             stringaLetta = inputServer.readUTF();
-            System.out.println(ColoreBlu + "Il Server ha detto: " + stringaLetta + ColoreBlu);
+            System.out.println(ColoreBlu + stringaLetta + ColoreReset);
         } catch (IOException ex) {
             Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
+    
     public void stampaMenuScelte()
     {
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
         System.out.println("In questo programma è possibile inviare al server diversi messaggi automatici come: ");
-        System.out.println("autore: Stampa il socket dell'host che ha inviato l'ultimo messaggio");
-        System.out.println("inLinea: Visualizza se l'host è in ascolto");
-        System.out.println("nonInLinea: Visualizza se l'host non è in ascolto");
-        System.out.println("echo: Invia l'ultimo messaggio presente nella conversazione");
-        System.out.println("end: Chiudi la connessione");
+        System.out.println("/autore: Stampa il socket dell'host che ha inviato l'ultimo messaggio");
+        System.out.println("/inLinea: Visualizza se l'host è in ascolto");
+        System.out.println("/nonInLinea: Visualizza se l'host non è in ascolto");
+        System.out.println("/echo: Invia l'ultimo messaggio presente nella conversazione");
+        System.out.println("/end: Chiudi la connessione");
         System.out.println("Se non intendi utilizzare nessuna di queste opzioni, invia un normale messaggio!");
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
 
     }
     
-    public void scegliInBaseAlMenu(Socket connection, String stringaInput)
+    public void inserisciUsername()
     {
-        switch(stringaInput)
-            {
-                case "end":
-        {
-            try {
-                gm.messaggioSalutoUscita(connection);
-            } catch (IOException ex) {
-                Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        {
-            try {
-                gm.end(connection);
-            } catch (IOException ex) {
-                Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-                    break;
-
-                case "autore":
-                    gm.autore(connection);
-                    break;
-
-                case "inLinea":
-                    gm.inLinea(connection);
-                    break;
-
-                case "nonInLinea":
-                    gm.nonInLinea(connection);
-                    break;
-
-                case "echo":
-        {
-            try {
-                gm.echo(connection);
-            } catch (IOException ex) {
-                Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-                    break;    
-            }
+        System.out.println("Inserisci il tuo username: ");
+        username = x.nextLine();
     }
-        
+    
+    public String trovaUsername()
+    {
+        System.out.println(username);
+        return username;
+    }
+    
+    public void chiudiConnessione()
+    {
+        try {
+            connection.close();
+            System.out.println("Connessione chiusa!");
+        } catch (IOException ex) {
+            Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
         
 }
