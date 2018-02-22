@@ -19,8 +19,8 @@ public class GestioneMessaggio {
     
     String messaggio;
 
-    public GestioneMessaggio(String messaggio) {
-        this.messaggio = messaggio;
+    public GestioneMessaggio(Socket connection) {
+        
     }
     
     public void autore(Socket connection)
@@ -86,16 +86,16 @@ public class GestioneMessaggio {
         dos.flush();
     }
     
-    public void smile(DataInputStream dis, Socket connection) throws IOException
-    {
-        String stringaLetta;
-        String smile = ":)";
-        stringaLetta = dis.readUTF();
-        String stringaDaInviare = "";
-        
+//    public void smile(DataInputStream dis, Socket connection) throws IOException
+//    {
+//        String stringaLetta;
+//        String smile = ":)";
+//        stringaLetta = dis.readUTF();
+//        String stringaDaInviare = "";
+//        
 //        if(stringaLetta.equals(smile))
 //        {
 //            stringaDaInviare = stringaDaInviare.replaceAll(":)", imageToAdd);
 //        }
-    }
+//    }
 }

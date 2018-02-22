@@ -22,7 +22,7 @@ public class ThreadServer extends Thread{
     
     public void run(){
         while(server1.connessioneAperta()==true){
-            server1.iniziaAscolto();
+            server1.riceviMessaggiDalClient();
         }
     }
     

@@ -22,7 +22,7 @@ public class ThreadClient extends Thread{
     
     public void run(){
         while(client1.connessioneAperta()==true){
-            client1.connessioneAlServer();
+            client1.ricevoMessaggioDalServer();
         }
     }
 }
