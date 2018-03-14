@@ -20,21 +20,9 @@ public class ThreadClient extends Thread{
         this.client1 = client1;
     }
     
-<<<<<<< HEAD
-    @Override
-    public void run(){
-        client1.connessioneAlServer();
-        //while(client1.connessioneAperta()==true){
-            client1.ricevoMessaggioDalServer();
-            client1.inviaMessaggioAlServer();
-        //}
-    }
-}
-=======
     public void run(){
         while(client1.connessioneAperta()==true){
             client1.ricevoMessaggioDalServer();
         }
     }
 }
->>>>>>> origin/master

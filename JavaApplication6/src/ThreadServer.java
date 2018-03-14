@@ -20,19 +20,6 @@ public class ThreadServer extends Thread{
         this.server1 = server1;
     }
     
-<<<<<<< HEAD
-    @Override
-    public void run(){
-        server1.iniziaAscolto();                              
-        //while(server1.connessioneAperta()==true){
-            //server1.riceviMessaggiDalClient();
-            server1.mandaMessaggiAlClient();
-            server1.riceviMessaggiDalClient();
-        //}
-    }
-    
-}
-=======
     public void run(){
         while(server1.connessioneAperta()==true){
             server1.riceviMessaggiDalClient();
@@ -40,4 +27,3 @@ public class ThreadServer extends Thread{
     }
     
 }
->>>>>>> origin/master

@@ -24,10 +24,7 @@ public class ClientClasse {
     
     Socket connection;
     String serverAddress;
-<<<<<<< HEAD
     boolean online;
-=======
->>>>>>> origin/master
     int port;
     String stringaInput, stringaLetta="";
     String username = "";
@@ -37,24 +34,14 @@ public class ClientClasse {
     public static final String ColoreRed = "\u001B[31m";
     public static final String ColoreReset = "\u001B[0m";
         
-<<<<<<< HEAD
     GestioneMessaggio gm1; 
-    
-    public ClientClasse(int port, String serverAddress, GestioneMessaggio gm1)
-    {
-        this.port = port;
-        this.serverAddress = serverAddress;
-        online = false;
-        this.gm1=gm1;
-        //gm1 = new GestioneMessaggio();
-=======
-    GestioneMessaggio gm1 = new GestioneMessaggio();
     
     public ClientClasse(int port, String serverAddress)
     {
         this.port = port;
         this.serverAddress = serverAddress;
->>>>>>> origin/master
+        online = false;
+        gm1 = new GestioneMessaggio();
     }
         
     public boolean connessioneAperta()
@@ -74,10 +61,7 @@ public class ClientClasse {
         try {
             connection = new Socket(serverAddress, port);
             System.out.println("Connessione con il server aperta!");
-<<<<<<< HEAD
             online = true;
-=======
->>>>>>> origin/master
         } catch (IOException ex) {
             Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -93,13 +77,8 @@ public class ClientClasse {
             outputServer.writeUTF(stringaInput);
             outputServer.flush();
             
-<<<<<<< HEAD
-//            gm1.trovaChiScrive();
-//            gm1.richiamaMessaggiAutomatici(stringaInput);
-=======
             gm1.trovaChiScrive();
             gm1.richiamaMessaggiAutomatici(stringaInput);
->>>>>>> origin/master
             
         } catch (IOException ex) {
             Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
@@ -111,12 +90,7 @@ public class ClientClasse {
         try {
             DataInputStream inputServer = new DataInputStream(connection.getInputStream());
             stringaLetta = inputServer.readUTF();
-<<<<<<< HEAD
-            
-            System.out.println(ColoreBlu + gm1.richiamaMessaggiAutomaticiCiuchetti(stringaLetta) + ColoreReset);
-=======
             System.out.println(ColoreBlu + stringaLetta + ColoreReset);
->>>>>>> origin/master
         } catch (IOException ex) {
             Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -134,10 +108,7 @@ public class ClientClasse {
         System.out.println("/end: Chiudi la connessione");
         System.out.println("Se non intendi utilizzare nessuna di queste opzioni, invia un normale messaggio!");
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
     }
     
     public void inserisciUsername()
@@ -145,17 +116,9 @@ public class ClientClasse {
         System.out.println("Inserisci il tuo username: ");
         username = x.nextLine();
     }
-<<<<<<< HEAD
 
     public boolean isOnline() {
         return online;
-=======
-    
-    public String trovaUsername()
-    {
-        System.out.println(username);
-        return username;
->>>>>>> origin/master
     }
     
     public void chiudiConnessione()
@@ -168,8 +131,4 @@ public class ClientClasse {
         }
     }
         
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master

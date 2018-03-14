@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group name="5CINF_DAN">
             <file>file:/Users/informatica/5CINF_DAN/JavaApplication69/src/ClientClasse.java</file>
             <file>file:/Users/informatica/5CINF_DAN/JavaApplication69/src/ThreadServer.java</file>
@@ -9,6 +10,16 @@
             <file>file:/Users/informatica/5CINF_DAN/JavaApplication69/src/ServerClasse.java</file>
             <file>file:/Users/informatica/5CINF_DAN/JavaApplication69/src/ThreadClient.java</file>
             <file>file:/Users/informatica/5CINF_DAN/JavaApplication69/src/Client.java</file>
+=======
+        <group>
+            <file>file:/C:/Users/loren/Downloads/5ainf_Pisano/5ainf_Pisano/src/Server.java</file>
+            <file>file:/C:/Users/loren/Downloads/5ainf_Pisano/5ainf_Pisano/src/ClientClasse.java</file>
+            <file>file:/C:/Users/loren/Downloads/5ainf_Pisano/5ainf_Pisano/src/ThreadClient.java</file>
+            <file>file:/C:/Users/loren/Downloads/5ainf_Pisano/5ainf_Pisano/src/Client.java</file>
+            <file>file:/C:/Users/loren/Downloads/5ainf_Pisano/5ainf_Pisano/src/GestioneMessaggio.java</file>
+            <file>file:/C:/Users/loren/Downloads/5ainf_Pisano/5ainf_Pisano/src/ThreadServer.java</file>
+            <file>file:/C:/Users/loren/Downloads/5ainf_Pisano/5ainf_Pisano/src/ServerClasse.java</file>
+>>>>>>> origin/master
         </group>
     </open-files>
 </project-private>

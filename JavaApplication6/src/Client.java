@@ -21,34 +21,12 @@ public class Client{
      * @param args the command line arguments
      */
     public static void main(String[] args){
-<<<<<<< HEAD
-        GestioneMessaggio g = new GestioneMessaggio();
-        
-        ClientClasse client1 = new ClientClasse(2000,"localhost", g);
-        ThreadClient tc = new ThreadClient(client1);
-        
-        
-        
-        
-        //client1.connessioneAlServer();
-        tc.start();
-        
-//        while(!client1.connessioneAperta()==false)
-//        {
-//            client1.inviaMessaggioAlServer();
-//        }
-        
-    }
-}
-=======
         
         ClientClasse client1 = new ClientClasse(2000,"localhost");
         ThreadClient tc = new ThreadClient(client1);
         
         client1.connessioneAlServer();
         tc.start();
-        
-        client1.inserisciUsername();
         
         while(!client1.connessioneAperta()==false)
         {
@@ -57,4 +35,3 @@ public class Client{
         
     }
 }
->>>>>>> origin/master

@@ -21,21 +21,6 @@ public class Server {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-<<<<<<< HEAD
-        GestioneMessaggio g = new GestioneMessaggio();
-        
-        ServerClasse server1 = new ServerClasse(2000, g);
-        ThreadServer ts = new ThreadServer(server1);
-        
-        //server1.iniziaAscolto();
-        ts.start();
-        
-        
-//        while(!server1.connessioneAperta()==false)
-//        {
-//            server1.mandaMessaggiAlClient();
-//        }
-=======
         
         ServerClasse server1 = new ServerClasse(2000);
         ThreadServer ts = new ThreadServer(server1);
@@ -43,13 +28,11 @@ public class Server {
         server1.iniziaAscolto();
         ts.start();
         
-        server1.inserisciUsername();
         
         while(!server1.connessioneAperta()==false)
         {
             server1.mandaMessaggiAlClient();
         }
->>>>>>> origin/master
         
     }  
 }
