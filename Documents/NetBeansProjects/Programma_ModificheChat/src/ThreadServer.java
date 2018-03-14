@@ -15,19 +15,28 @@ import java.util.logging.Logger;
 public class ThreadServer extends Thread{
     
     ServerClasse server1;
+    ClientClasse client1;
 
-    public ThreadServer(ServerClasse server1) {
+    public ThreadServer(ServerClasse server1, ClientClasse client1) {
         this.server1 = server1;
+        this.client1 = client1;
     }
     
     @Override
     public void run(){
-        server1.iniziaAscolto();                              
-        //while(server1.connessioneAperta()==true){
-            //server1.riceviMessaggiDalClient();
-            server1.mandaMessaggiAlClient();
+        client1.getUsername();
+        //server1.iniziaAscolto();  
+        
+        /*while(server1.connessioneAperta()==true){
             server1.riceviMessaggiDalClient();
+            server1.mandaMessaggiAlClient();
+            server1.riceviMessaggiDalClient();*/
         //}
+        
+        while(server1.isOnline()==true){
+            server1.riceviMessaggiDalClient(client1);
+        }
+        
     }
     
 } 

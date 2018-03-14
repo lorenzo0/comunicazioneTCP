@@ -23,17 +23,18 @@ public class Server {
     public static void main(String[] args) {
         GestioneMessaggio g = new GestioneMessaggio();
         
+        ClientClasse client1 = new ClientClasse(2000,"localhost", g);
+        
         ServerClasse server1 = new ServerClasse(2000, g);
-        ThreadServer ts = new ThreadServer(server1);
+        ThreadServer ts = new ThreadServer(server1, client1);
         
-        //server1.iniziaAscolto();
-        ts.start();
+        server1.iniziaAscolto();
+        ts.start();        
         
-        
-//        while(!server1.connessioneAperta()==false)
-//        {
-//            server1.mandaMessaggiAlClient();
-//        }
+        while(server1.isOnline()==true)
+        {
+            server1.mandaMessaggiAlClient();
+        }
         
     }  
 } 

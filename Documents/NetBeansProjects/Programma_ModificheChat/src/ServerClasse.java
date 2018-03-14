@@ -4,7 +4,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -24,7 +23,7 @@ public class ServerClasse {
     ServerSocket sSocket;
     Socket connection;
     String stringaLetta, stringaInput;
-    String username = "";
+    String username = "Server";
     
     Scanner x = new Scanner(System.in);
     public static final String ColoreBlu = "\u001B[34m";
@@ -56,6 +55,7 @@ public class ServerClasse {
     {
         try {
             DataOutputStream outputServer = new DataOutputStream(connection.getOutputStream());
+            //System.out.print(username + ":");
             stringaInput = x.nextLine();
             gm1.richiamaMessaggiAutomatici(stringaInput);
             outputServer.writeUTF(stringaInput);
@@ -69,33 +69,28 @@ public class ServerClasse {
         }
     }
     
-    public void riceviMessaggiDalClient()
+    public void riceviMessaggiDalClient(ClientClasse c1)
     {
+        
         try {
             DataInputStream inputClient = new DataInputStream(connection.getInputStream());
             stringaLetta = inputClient.readUTF();
-            System.out.println(ColoreRed + stringaLetta + ColoreReset);
+            
+            System.out.println(ColoreRed + c1.getUsername() + ": " + gm1.richiamaMessaggiAutomatici(stringaLetta) + ColoreReset);
+            
         } catch (IOException ex) {
             Logger.getLogger(ServerClasse.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public boolean connessioneAperta()
-    {
-        if(!connection.isClosed()==true)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    
-    public void inserisciUsername()
+    public void setUsername()
     {
         System.out.println("Inserisci il tuo username: ");
         username = x.nextLine();
+    }
+    
+    public String getUsername() {
+        return username;
     }
 
     public boolean isOnline() {

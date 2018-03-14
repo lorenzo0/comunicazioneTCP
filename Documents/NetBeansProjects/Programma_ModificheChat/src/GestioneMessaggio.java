@@ -29,18 +29,6 @@ public class GestioneMessaggio {
 //        gm1 = new GestioneMessaggio();
     }
     
-    public int trovaChiScrive()
-    {
-        if(c1!=null)
-        {
-            return 1; //client scrive
-        }
-        else
-        {
-            return 0; //server risponde
-        }
-    }
-    
     
     public void echo(Socket connection) throws IOException
     {
@@ -76,35 +64,18 @@ public class GestioneMessaggio {
         dos.flush();
     }
     
-    public void richiamaMessaggiAutomatici(String messaggioInInputDaChat)
+    public String richiamaMessaggiAutomatici(String messaggioInInputDaChat)
     {
-        System.out.println("Sono nel metodo");
-        
-        switch (messaggioInInputDaChat)
-        {
-            case "/autore":
-            System.out.println("Sono nello switch");
-            
-            if(trovaChiScrive() == 1)
-            {
-                //scrive client
-                c1.inserisciUsername();
-            }
-            else
-            {
-                //scrive server
-                s1.inserisciUsername();
-            }
-        }
-    }
-    public String richiamaMessaggiAutomaticiCiuchetti(String messaggioInInputDaChat)
-    {
-        System.out.println("Sono nel metodo");
         
         switch (messaggioInInputDaChat)
         {
             case "/smile":
-                return ":-)";
+                return ":)";
+                
+            case "/echo":
+                System.out.println("Hai chiesto di ripetere: " + messaggioInInputDaChat);
+                return messaggioInInputDaChat;
+                
             default:
                 return messaggioInInputDaChat;
         }

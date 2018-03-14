@@ -27,7 +27,7 @@ public class ClientClasse {
     boolean online;
     int port;
     String stringaInput, stringaLetta="";
-    String username = "";
+    String username = "Client";
     
     Scanner x = new Scanner(System.in);
     public static final String ColoreBlu = "\u001B[34m";
@@ -44,19 +44,6 @@ public class ClientClasse {
         this.gm1=gm1;
         //gm1 = new GestioneMessaggio();
     }
-        
-    public boolean connessioneAperta()
-    {
-        if(!connection.isClosed()==true)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    
     public void connessioneAlServer() 
     {
         try {
@@ -73,26 +60,29 @@ public class ClientClasse {
     {
         try {
             DataOutputStream outputServer = new DataOutputStream(connection.getOutputStream());
-            
+            //System.out.print(username + ":");
             stringaInput = x.nextLine();
+            
+            gm1.richiamaMessaggiAutomatici(stringaInput);
+            
             outputServer.writeUTF(stringaInput);
             outputServer.flush();
             
 //            gm1.trovaChiScrive();
-//            gm1.richiamaMessaggiAutomatici(stringaInput);
             
         } catch (IOException ex) {
             Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void ricevoMessaggioDalServer()
+    public void ricevoMessaggioDalServer(ServerClasse s1)
     {
+        
         try {
             DataInputStream inputServer = new DataInputStream(connection.getInputStream());
             stringaLetta = inputServer.readUTF();
             
-            System.out.println(ColoreBlu + gm1.richiamaMessaggiAutomaticiCiuchetti(stringaLetta) + ColoreReset);
+            System.out.println(ColoreBlu + s1.getUsername() + ": " + gm1.richiamaMessaggiAutomatici(stringaLetta) + ColoreReset);
         } catch (IOException ex) {
             Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -103,7 +93,7 @@ public class ClientClasse {
     {
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
         System.out.println("In questo programma è possibile inviare al server diversi messaggi automatici come: ");
-        System.out.println("/autore: Stampa il socket dell'host che ha inviato l'ultimo messaggio");
+        System.out.println("/autore: Cambia l'username dell'host che lo richiede");
         System.out.println("/inLinea: Visualizza se l'host è in ascolto");
         System.out.println("/nonInLinea: Visualizza se l'host non è in ascolto");
         System.out.println("/echo: Invia l'ultimo messaggio presente nella conversazione");
@@ -112,10 +102,14 @@ public class ClientClasse {
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
     }
     
-    public void inserisciUsername()
+    public void setUsername()
     {
         System.out.println("Inserisci il tuo username: ");
         username = x.nextLine();
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public boolean isOnline() {
