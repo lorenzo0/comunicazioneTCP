@@ -45,8 +45,10 @@ public class ClientClasse {
     public void connessioneAlServer() 
     {
         try {
+            //Cerco una connessione, se il server è in ascolto mi connetto
             connection = new Socket(serverAddress, port);
             System.out.println("Connessione con il server aperta!");
+            //variabile che mi serve per capire se il client è online o offline
             online = true;
         } catch (IOException ex) {
             Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,16 +58,21 @@ public class ClientClasse {
     
     public void inviaMessaggioAlServer()
     {
+        //serve per capire nella classe gestione messaggio se chi manda il messaggio è un client o un server
         String chie = "c";
         
         try {
+            //prendo la stringa inserita dall'utente e creo uno stream per comunicare con il server
             DataOutputStream outputServer = new DataOutputStream(connection.getOutputStream());
             //System.out.print(username + ":");
             stringaInput = x.nextLine();
             
+            //richiamo il metodo della classe gestione messaggio
             gm1.richiamaMessaggiAutomatici(stringaInput, chie);
             
+            //mando con lo stream il messaggio inserito dall'utente
             outputServer.writeUTF(stringaInput);
+            //svuoto lo stream
             outputServer.flush();
             
 //            gm1.trovaChiScrive();
@@ -79,9 +86,12 @@ public class ClientClasse {
     {
         String vuoto = "";
         try {
+            //creo uno stream che mi permette di leggere i messaggi che il server sta mandando
             DataInputStream inputServer = new DataInputStream(connection.getInputStream());
+            //inserisco il messaggio letto nella variabile stringaLetta
             stringaLetta = inputServer.readUTF();
             
+            //stampo con una determinata formattazzione il messaggio a video
             System.out.println(ColoreBlu + s1.getUsername() + ": " + gm1.richiamaMessaggiAutomatici(stringaLetta, vuoto) + ColoreReset);
         } catch (IOException ex) {
             Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,11 +101,16 @@ public class ClientClasse {
     public void echo()
     {
         try {
+            //creo uno stream che mi permette di leggere i messaggi che il server sta mandando
             DataInputStream inputServer = new DataInputStream(connection.getInputStream());
+            //inserisco il messaggio letto nella variabile stringaLetta
             stringaLetta = inputServer.readUTF();
             
+            //prendo l'ultima stringa inserita presente nella comunicazione
             DataOutputStream outputServer = new DataOutputStream(connection.getOutputStream());
+            //mando con lo stream il messaggio inserito dall'utente
             outputServer.writeUTF(stringaLetta);
+            //svuoto lo stream
             outputServer.flush();
             
         } catch (IOException ex) {
@@ -105,12 +120,14 @@ public class ClientClasse {
     
     public void inLinea()
     {
+        //se è true il client è in linea
         online = true;
         System.out.println("Il client è ora online!");
     }
     
     public void nonInLinea()
     {
+        //se è false il client non è in linea
         online = false;
         System.out.println("Il client è ora offline!");
     }
@@ -118,6 +135,7 @@ public class ClientClasse {
     
     public void stampaMenuScelte()
     {
+        //mi serve per far capire all'utente quali sono i servizi che il programma offre e come usufruirne
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
         System.out.println("In questo programma è possibile inviare al server diversi messaggi automatici come: ");
         System.out.println("/autore: Cambia l'username dell'host che lo richiede");
@@ -131,11 +149,13 @@ public class ClientClasse {
     
     public void setUsername()
     {
+        //se l'utente usa /autore, questo metodo permette di cambiare l'username dell'utente
         System.out.println("Inserisci il tuo username: ");
         username = x.nextLine();
     }
 
     public String getUsername() {
+        //ritorna una stringa che contiene l'username attuale del client
         return username;
     }
 
@@ -146,8 +166,10 @@ public class ClientClasse {
     public void chiudiConnessione()
     {
         try {
+            //se la connessione è aperta
             if(connection != null)
             {
+                //la chiudo
                 connection.close();
                 System.out.println("Connessione chiusa! (Client)");
             }

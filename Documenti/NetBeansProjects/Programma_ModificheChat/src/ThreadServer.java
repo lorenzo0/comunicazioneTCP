@@ -14,16 +14,21 @@ import java.util.logging.Logger;
  */
 public class ThreadServer extends Thread{
     
+    //instanza server e client
     ServerClasse server1;
     ClientClasse client1;
 
+    /*istanzio client e server con quelli ricevuti nel costruttore quando si istanzia 
+    l'oggetto ThreadServer nelle classi esecutibili come Client e Server */
     public ThreadServer(ServerClasse server1, ClientClasse client1) {
         this.server1 = server1;
         this.client1 = client1;
     }
     
+    //viene automaticamente invocato quando si usa tc.start() nella classe esecutibile server/client
     @Override
     public void run(){
+        //leggo l'username del client
         client1.getUsername();
         //server1.iniziaAscolto();  
         
@@ -33,6 +38,7 @@ public class ThreadServer extends Thread{
             server1.riceviMessaggiDalClient();*/
         //}
         
+        //finchè è online, il server può ricevere messaggi dal client
         while(server1.isOnline()==true){
             server1.riceviMessaggiDalClient(client1);
         }

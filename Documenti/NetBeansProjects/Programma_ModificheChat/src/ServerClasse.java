@@ -38,27 +38,39 @@ public class ServerClasse {
         gm1 = new GestioneMessaggio();
     }
     
+    //Server si mette in ascolto quando viene invocato questo metodo
     public void iniziaAscolto()
     {
         try {
             System.out.println("Server in attesa di connessioni...");
+            //in una determinata porta
             sSocket = new ServerSocket(port);
+            //aspetta un client che si connette
             connection = sSocket.accept();
+            //variabile che mi dice se il server è online o offline
             online=true;
         } catch (IOException ex) {
             Logger.getLogger(ServerClasse.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
+    //metodo per mandare messaggi al client
     public void mandaMessaggiAlClient()
     {
+        //serve per capire nella classe gestione messaggio se chi manda il messaggio è un client o un server
         String chie = "s";
         try {
+             //prendo la stringa inserita dall'utente e creo uno stream per comunicare con il client
             DataOutputStream outputServer = new DataOutputStream(connection.getOutputStream());
             //System.out.print(username + ":");
             stringaInput = x.nextLine();
+            
+            //richiamo il metodo della classe gestione messaggio
             gm1.richiamaMessaggiAutomatici(stringaInput, chie);
+            
+            //mando con lo stream il messaggio inserito dall'utente
             outputServer.writeUTF(stringaInput);
+            //svuoto lo stream
             outputServer.flush();
             
 //            gm1.trovaChiScrive();
@@ -73,9 +85,12 @@ public class ServerClasse {
     {
         String vuoto = "";
         try {
+            //creo uno stream che mi permette di leggere i messaggi che il client sta mandando
             DataInputStream inputClient = new DataInputStream(connection.getInputStream());
+            //inserisco il messaggio letto nella variabile stringaLetta
             stringaLetta = inputClient.readUTF();
             
+            //stampo con una determinata formattazzione il messaggio a video
             System.out.println(ColoreRed + c1.getUsername() + ": " + gm1.richiamaMessaggiAutomatici(stringaLetta, vuoto) + ColoreReset);
             
         } catch (IOException ex) {
@@ -87,11 +102,16 @@ public class ServerClasse {
     public void echo()
     {
         try {
+            //creo uno stream che mi permette di leggere i messaggi che il client sta mandando
             DataInputStream inputServer = new DataInputStream(connection.getInputStream());
+            //inserisco il messaggio letto nella variabile stringaLetta
             stringaLetta = inputServer.readUTF();
             
+            //prendo l'ultima stringa inserita presente nella comunicazione
             DataOutputStream outputServer = new DataOutputStream(connection.getOutputStream());
+            //mando con lo stream il messaggio inserito dall'utente
             outputServer.writeUTF(stringaLetta);
+            //svuoto lo stream
             outputServer.flush();
             
         } catch (IOException ex) {
@@ -101,23 +121,27 @@ public class ServerClasse {
     
     public void inLinea()
     {
+        //se è true il server è in linea
         online = true;
-        System.out.println("Il client è ora online!");
+        System.out.println("Il server è ora online!");
     }
     
     public void nonInLinea()
     {
+        //se è false il server non è in linea
         online = false;
-        System.out.println("Il client è ora offline!");
+        System.out.println("Il server è ora offline!");
     }
     
     public void setUsername()
     {
+        //se l'utente usa /autore, questo metodo permette di cambiare l'username dell'utente
         System.out.println("Inserisci il tuo username: ");
         username = x.nextLine();
     }
     
     public String getUsername() {
+        //metodo che ritorna una stringa che contiene l'username attuale del client
         return username;
     }
 
@@ -128,9 +152,12 @@ public class ServerClasse {
     public void chiudiConnessione()
     {
         try {
+            //se la connessione è aperta
             if(connection != null)
             {
+                //chiudo il server socket
                 sSocket.close();
+                //la chiudo
                 connection.close();
                 System.out.println("Connessione chiusa! (Server)");
             }

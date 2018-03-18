@@ -22,7 +22,8 @@ public class GestioneMessaggio {
     ServerClasse s1;
 //   GestioneMessaggio gm1;
     
-    
+    /*istanzio client e server con quelli ricevuti nel costruttore
+    quando si istanzia l'oggetto GestioneMessaggio nelle classi esecutibili come Client e Server */
     public GestioneMessaggio(ClientClasse c1, ServerClasse s1) {
         this.c1=c1;
         this.s1=s1;
@@ -31,10 +32,13 @@ public class GestioneMessaggio {
 //        gm1 = new GestioneMessaggio();
     }
     
+    /*doppio costruttore, per non dover istanziare nuovi oggetti nelle classi
+    ClientClasse e ServerClasse*/
     public GestioneMessaggio() {
     }
     
-    
+    /*metodo per gestire tutti i messaggi che passano con gli stream nel canale di comunicazione aperto
+    se non viene richiamato nessun messaggio automatico, la stringa letta viene inoltrata all'host destinatario senza modifiche*/
     public String richiamaMessaggiAutomatici(String messaggioInInputDaChat, String scopriChie)
     {
         

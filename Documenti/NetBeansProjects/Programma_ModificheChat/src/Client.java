@@ -22,20 +22,21 @@ public class Client{
 +     */
     public static void main(String[] args)
     {
-        
-        
+        //instanza client e server
         ServerClasse server1 = new ServerClasse(2000);
-        
         ClientClasse client1 = new ClientClasse(2000,"localhost");
-        ThreadClient tc = new ThreadClient(client1, server1);
         
+        //instanza thread che permette la corretta ricezione dei messaggi spediti dal server
+        ThreadClient tc = new ThreadClient(client1, server1);
+        //instanza gestione messaggio per gestire correttamente la comunicazione
         GestioneMessaggio g = new GestioneMessaggio(client1, server1);
         
+        //client si connette al server se quest'ultimo è in ascolto
         client1.connessioneAlServer();
         tc.start();
         client1.stampaMenuScelte();
        
-        
+        //finchè la connessione è aperta, il client può mandare messaggi al server
         while(client1.isOnline()==true)
         {
             client1.inviaMessaggioAlServer();
