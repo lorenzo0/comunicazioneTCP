@@ -32,10 +32,10 @@ public class ThreadClient extends Thread{
         server1.getUsername();
         //client1.connessioneAlServer();
         
-      /*while(client1.connessioneAperta()==true){
-           client1.ricevoMessaggioDalServer();
-           client1.inviaMessaggioAlServer();
-      }*/
+            /*while(client1.connessioneAperta()==true){
+                 client1.ricevoMessaggioDalServer();
+                 client1.inviaMessaggioAlServer();
+            }*/
       
         //finchè è online, il client può ricevere messaggi dal client
         while(client1.isOnline()==true)

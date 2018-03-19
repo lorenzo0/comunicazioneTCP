@@ -34,8 +34,14 @@ public class GestioneMessaggio {
     
     /*doppio costruttore, per non dover istanziare nuovi oggetti nelle classi
     ClientClasse e ServerClasse*/
-    public GestioneMessaggio() {
+    public GestioneMessaggio(ClientClasse c1) {
+        this.c1 = c1;
     }
+    
+    public GestioneMessaggio(ServerClasse s1) {
+        this.s1 = s1;
+    }
+    
     
     /*metodo per gestire tutti i messaggi che passano con gli stream nel canale di comunicazione aperto
     se non viene richiamato nessun messaggio automatico, la stringa letta viene inoltrata all'host destinatario senza modifiche*/
@@ -45,9 +51,11 @@ public class GestioneMessaggio {
         switch (messaggioInInputDaChat)
         {
             case "/smile":
+                
                 return ":)";
                 
             case "/echo":
+                
                 if(scopriChie.equals("c"))
                 {
                     c1.echo();
@@ -56,8 +64,18 @@ public class GestioneMessaggio {
                 {
                     s1.echo();
                 }
+                break;
+                
+            case "/salutiInEntrata":
+                
+                return "Buongiorno, mi sono appena connesso!";
+                
+            case "/salutiInUscita":
+                
+                return "Arrivederci, devo andare!";
                 
             case "/inLinea":
+                
                 if(scopriChie.equals("c"))
                 {
                     c1.inLinea();
@@ -66,8 +84,14 @@ public class GestioneMessaggio {
                 {
                     s1.inLinea();
                 }
+            break;
+            
+            case "/like":
+                
+                return "\uD83D\uDC4D";
                 
             case "/nonInLinea":
+                
                 if(scopriChie.equals("c"))
                 {
                     c1.nonInLinea();
@@ -76,8 +100,10 @@ public class GestioneMessaggio {
                 {
                     s1.nonInLinea();
                 }
+            break;
               
             case "/autore":
+                
                 if(scopriChie.equals("c"))
                 {
                     c1.setUsername();
@@ -86,8 +112,10 @@ public class GestioneMessaggio {
                 {
                     s1.setUsername();
                 }
+            break;
                 
             case "/end":
+                
                 if(scopriChie.equals("c"))
                 {
                     c1.chiudiConnessione();
@@ -96,11 +124,14 @@ public class GestioneMessaggio {
                 {
                     s1.chiudiConnessione();
                 }
+            break;
                 
                 
             default:
+                
                 return messaggioInInputDaChat;
         }
+        return "";
     }
     
 } 

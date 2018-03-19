@@ -23,10 +23,10 @@ public class ServerClasse {
     ServerSocket sSocket;
     Socket connection;
     String stringaLetta, stringaInput;
-    String username = "Server";
+    String username;
     
     Scanner x = new Scanner(System.in);
-    public static final String ColoreBlu = "\u001B[34m";
+    public static final String ColoreCyan = "\\u001B[36m";
     public static final String ColoreRed = "\u001B[31m";
     public static final String ColoreReset = "\u001B[0m";
     
@@ -35,7 +35,8 @@ public class ServerClasse {
     public ServerClasse(int port) {
         this.port = port;
         online = false;
-        gm1 = new GestioneMessaggio();
+        gm1 = new GestioneMessaggio(this);
+        username = "Server";
     }
     
     //Server si mette in ascolto quando viene invocato questo metodo
@@ -135,10 +136,21 @@ public class ServerClasse {
     
     public void setUsername()
     {
-        //se l'utente usa /autore, questo metodo permette di cambiare l'username dell'utente
-        System.out.println("Inserisci il tuo username: ");
-        username = x.nextLine();
+        try {
+            BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("Inserisci il tuo nuovo username: ");
+            this.username=input.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    
+//    public void setUsername()
+//    {
+//        //se l'utente usa /autore, questo metodo permette di cambiare l'username dell'utente
+//        System.out.println("Inserisci il tuo username: ");
+//        username = x.next();
+//    }
     
     public String getUsername() {
         //metodo che ritorna una stringa che contiene l'username attuale del client

@@ -29,7 +29,6 @@
         <Constructor visibility="public">
           <Argument type="int" name="port"/>
           <Argument type="String" name="serverAddress"/>
-          <Argument type="GestioneMessaggio" name="gm1"/>
         </Constructor>
       </Constructors>
       <Methods>
@@ -38,6 +37,9 @@
         <Method name="ricevoMessaggioDalServer" returnType="void" visibility="public">
           <Argument type="ServerClasse" name="s1"/>
         </Method>
+        <Method name="echo" returnType="void" visibility="public"/>
+        <Method name="inLinea" returnType="void" visibility="public"/>
+        <Method name="nonInLinea" returnType="void" visibility="public"/>
         <Method name="stampaMenuScelte" returnType="void" visibility="public"/>
         <Method name="setUsername" returnType="void" visibility="public"/>
         <Method name="getUsername" returnType="String" visibility="public"/>
@@ -51,20 +53,16 @@
         <Field name="s1" type="ServerClasse" visibility="package"/>
       </Fields>
       <Constructors>
+        <Constructor visibility="public">
+          <Argument type="ClientClasse" name="c1"/>
+          <Argument type="ServerClasse" name="s1"/>
+        </Constructor>
         <Constructor visibility="public"/>
       </Constructors>
       <Methods>
-        <Method name="echo" returnType="void" visibility="public">
-          <Argument type="Socket" name="connection"/>
-        </Method>
-        <Method name="end" returnType="void" visibility="public">
-          <Argument type="Socket" name="connection"/>
-        </Method>
-        <Method name="messaggioSalutoUscita" returnType="void" visibility="public">
-          <Argument type="Socket" name="connection"/>
-        </Method>
         <Method name="richiamaMessaggiAutomatici" returnType="String" visibility="public">
           <Argument type="String" name="messaggioInInputDaChat"/>
+          <Argument type="String" name="scopriChie"/>
         </Method>
       </Methods>
     </Class>
@@ -94,7 +92,6 @@
       <Constructors>
         <Constructor visibility="public">
           <Argument type="int" name="port"/>
-          <Argument type="GestioneMessaggio" name="gm1"/>
         </Constructor>
       </Constructors>
       <Methods>
@@ -103,6 +100,9 @@
         <Method name="riceviMessaggiDalClient" returnType="void" visibility="public">
           <Argument type="ClientClasse" name="c1"/>
         </Method>
+        <Method name="echo" returnType="void" visibility="public"/>
+        <Method name="inLinea" returnType="void" visibility="public"/>
+        <Method name="nonInLinea" returnType="void" visibility="public"/>
         <Method name="setUsername" returnType="void" visibility="public"/>
         <Method name="getUsername" returnType="String" visibility="public"/>
         <Method name="isOnline" returnType="boolean" visibility="public"/>
@@ -141,15 +141,15 @@
     </Class>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
+    <HasRelation name="gm1" source="ClientClasse" target="GestioneMessaggio" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="server1" source="ThreadServer" target="ServerClasse" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="server1" source="ThreadClient" target="ServerClasse" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="gm1" source="ServerClasse" target="GestioneMessaggio" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="client1" source="ThreadServer" target="ClientClasse" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="c1" source="GestioneMessaggio" target="ClientClasse" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="server1" source="ThreadClient" target="ServerClasse" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="gm1" source="ClientClasse" target="GestioneMessaggio" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="client1" source="ThreadClient" target="ClientClasse" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="s1" source="GestioneMessaggio" target="ServerClasse" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="ClientClasse" target="ServerClasse" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="ServerClasse" target="ClientClasse" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="s1" source="GestioneMessaggio" target="ServerClasse" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="client1" source="ThreadClient" target="ClientClasse" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="server1" source="ThreadServer" target="ServerClasse" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="gm1" source="ServerClasse" target="GestioneMessaggio" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
   </ClassDiagramRelations>
 </ClassDiagram>

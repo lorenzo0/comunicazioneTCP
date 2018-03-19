@@ -27,10 +27,10 @@ public class ClientClasse {
     boolean online;
     int port;
     String stringaInput, stringaLetta="";
-    String username = "Client";
+    String username;
     
     Scanner x = new Scanner(System.in);
-    public static final String ColoreBlu = "\u001B[34m";
+    public static final String ColoreCyan = "\u001B[36m";
     public static final String ColoreRed = "\u001B[31m";
     public static final String ColoreReset = "\u001B[0m";
         
@@ -40,7 +40,8 @@ public class ClientClasse {
         this.port = port;
         this.serverAddress = serverAddress;
         online = false;
-        gm1 = new GestioneMessaggio();
+        gm1 = new GestioneMessaggio(this);
+        username = "Client";
     }
     public void connessioneAlServer() 
     {
@@ -92,7 +93,7 @@ public class ClientClasse {
             stringaLetta = inputServer.readUTF();
             
             //stampo con una determinata formattazzione il messaggio a video
-            System.out.println(ColoreBlu + s1.getUsername() + ": " + gm1.richiamaMessaggiAutomatici(stringaLetta, vuoto) + ColoreReset);
+            System.out.println(ColoreCyan + s1.getUsername() + ": " + gm1.richiamaMessaggiAutomatici(stringaLetta, vuoto) + ColoreReset);
         } catch (IOException ex) {
             Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -100,14 +101,22 @@ public class ClientClasse {
     
     public void echo()
     {
+        //serve per capire nella classe gestione messaggio se chi manda il messaggio è un client o un server
+        String chie = "c";
         try {
             //creo uno stream che mi permette di leggere i messaggi che il server sta mandando
             DataInputStream inputServer = new DataInputStream(connection.getInputStream());
             //inserisco il messaggio letto nella variabile stringaLetta
             stringaLetta = inputServer.readUTF();
             
+            System.out.println(stringaLetta);
+            
             //prendo l'ultima stringa inserita presente nella comunicazione
             DataOutputStream outputServer = new DataOutputStream(connection.getOutputStream());
+            
+            //richiamo il metodo della classe gestione messaggio
+            gm1.richiamaMessaggiAutomatici(stringaLetta, chie);
+            
             //mando con lo stream il messaggio inserito dall'utente
             outputServer.writeUTF(stringaLetta);
             //svuoto lo stream
@@ -138,10 +147,13 @@ public class ClientClasse {
         //mi serve per far capire all'utente quali sono i servizi che il programma offre e come usufruirne
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
         System.out.println("In questo programma è possibile inviare al server diversi messaggi automatici come: ");
+        System.out.println("/salutiInEntrata: Saluta l'host destinatario!");
         System.out.println("/autore: Cambia l'username dell'host che lo richiede");
+        System.out.println("/like: Invia un like");
         System.out.println("/inLinea: Cambia lo stato dell'host che lo richiede in 'online'");
         System.out.println("/nonInLinea: Cambia lo stato dell'host che lo richiede in 'offline'");
         System.out.println("/echo: Invia l'ultimo messaggio presente nella conversazione");
+        System.out.println("/salutiInUscita: Saluta l'host destinatario!");
         System.out.println("/end: Chiudi la connessione dell'host che lo richiede");
         System.out.println("Se non intendi utilizzare nessuna di queste opzioni, invia un normale messaggio!");
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
@@ -149,9 +161,13 @@ public class ClientClasse {
     
     public void setUsername()
     {
-        //se l'utente usa /autore, questo metodo permette di cambiare l'username dell'utente
-        System.out.println("Inserisci il tuo username: ");
-        username = x.nextLine();
+        try {
+            BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("Inserisci il tuo nuovo username: ");
+            this.username=input.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientClasse.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String getUsername() {
